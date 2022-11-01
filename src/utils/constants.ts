@@ -57,7 +57,7 @@ export const isProdGateway = (): boolean => {
 
 export const GATEWAY_URL =
   process.env.REACT_APP_GATEWAY_URL ||
-  (IS_PRODUCTION || isProdGateway() ? 'https://safe-client.gnosis.io' : 'https://safe-client.staging.5afe.dev')
+  (IS_PRODUCTION || isProdGateway() ? 'https://safe-config.lachain.net' : 'https://safe-config.lachain.net')
 
 // Safe Token
 export const SAFE_TOKEN_ADDRESSES: { [chainId: string]: string } = {
