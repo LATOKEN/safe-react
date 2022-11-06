@@ -13,6 +13,8 @@ const CLI_LINK = 'https://github.com/5afe/safe-cli'
 export const InvalidMasterCopyError = (): React.ReactElement | null => {
   const chainInfo = getChainInfo()
   const { implementation } = useSelector(currentSafe)
+  console.log("CHAIN INFO", chainInfo)
+  console.log("IMPLEMENTATION", implementation)
   const [showMasterCopyError, setShowMasterCopyError] = useState(true)
 
   const [validMasterCopy, error] = useAsync(async () => {
