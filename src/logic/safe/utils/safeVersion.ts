@@ -91,6 +91,10 @@ export const getSafeVersionInfo = async (safeVersion: string): Promise<SafeVersi
 export const isValidMasterCopy = async (chainId: string, masterCopyAddress: string): Promise<boolean> => {
   const supportedMasterCopies = await getMasterCopies(chainId)
 
+  logError(Errors._606, "start dump")
+  logError(Errors._606, chainId)
+  logError(Errors._606, supportedMasterCopies)
+  logError(Errors._606, masterCopyAddress)
   return supportedMasterCopies.some((supportedMasterCopy) =>
     sameAddress(supportedMasterCopy.address, masterCopyAddress),
   )
