@@ -93,7 +93,7 @@ export const isValidMasterCopy = async (chainId: string, masterCopyAddress: stri
 
   logError(Errors._606, "start dump")
   logError(Errors._606, chainId)
-  logError(Errors._606, supportedMasterCopies)
+  logError(Errors._606, supportedMasterCopies.address)
   logError(Errors._606, masterCopyAddress)
   return supportedMasterCopies.some((supportedMasterCopy) =>
     sameAddress(supportedMasterCopy.address, masterCopyAddress),
