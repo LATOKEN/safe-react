@@ -178,6 +178,7 @@ export const getSafeSDK = async (signerAddress: string, safeAddress: string, saf
   }
 
   console.log('Go safe create', ethAdapter, safeAddress, isL1SafeMasterCopy)
+  console.log(Safe.create)
   return await Safe.create({
     ethAdapter,
     safeAddress,
