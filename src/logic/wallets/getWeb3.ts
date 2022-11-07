@@ -164,8 +164,11 @@ export const getSDKWeb3ReadOnly = (): Web3Adapter => {
 }
 
 export const getSafeSDK = async (signerAddress: string, safeAddress: string, safeVersion: string): Promise<Safe> => {
+  console.log('get network id')
   const networkId = (await getChainIdFrom(web3)).toString() as ChainId
+  console.log('got network id', networkId)
   const ethAdapter = getSDKWeb3Adapter(signerAddress)
+  console.log('eth adapter', ethAdapter)
 
   let isL1SafeMasterCopy: boolean
   if (semverSatisfies(safeVersion, '<1.3.0')) {
@@ -174,6 +177,7 @@ export const getSafeSDK = async (signerAddress: string, safeAddress: string, saf
     isL1SafeMasterCopy = networkId === CHAIN_ID.ETHEREUM
   }
 
+  console.log('Go safe create', ethAdapter, safeAddress, isL1SafeMasterCopy)
   return await Safe.create({
     ethAdapter,
     safeAddress,
