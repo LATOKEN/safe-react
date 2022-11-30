@@ -4,11 +4,14 @@ import { Contract } from 'web3-eth-contract'
 import { provider as Provider } from 'web3-core'
 import { ContentHash } from 'web3-eth-ens'
 import { namehash } from '@ethersproject/hash'
-import Safe from '@gnosis.pm/safe-core-sdk'
+import Safe, { ContractNetworksConfig } from '@gnosis.pm/safe-core-sdk'
+
 import Web3Adapter from '@gnosis.pm/safe-web3-lib'
 import { FEATURES } from '@gnosis.pm/safe-react-gateway-sdk'
 import memoize from 'lodash/memoize'
-
+import multiSendAbi from './abis/multi_send.json'
+import safeMasterCopyAbi from './abis/gnosis_safe.json'
+import safeProxyFactoryAbi from './abis/proxy_factory.json'
 import { ZERO_ADDRESS } from './ethAddresses'
 import { EMPTY_DATA } from './ethTransactions'
 import { getRpcServiceUrl, _getChainId } from 'src/config'
@@ -19,6 +22,7 @@ import { hasFeature } from 'src/logic/safe/utils/safeVersion'
 import { checksumAddress } from 'src/utils/checksumAddress'
 import { isValidAddress } from 'src/utils/isValidAddress'
 import { Wallet } from 'bnc-onboard/dist/src/interfaces'
+import { AbiItem } from 'web3-utils'
 
 // This providers have direct relation with name assigned in bnc-onboard configuration
 export enum WALLET_PROVIDER {
@@ -164,11 +168,9 @@ export const getSDKWeb3ReadOnly = (): Web3Adapter => {
 }
 
 export const getSafeSDK = async (signerAddress: string, safeAddress: string, safeVersion: string): Promise<Safe> => {
-  console.log('get network id')
   const networkId = (await getChainIdFrom(web3)).toString() as ChainId
-  console.log('got network id', networkId)
+
   const ethAdapter = getSDKWeb3Adapter(signerAddress)
-  console.log('eth adapter', ethAdapter)
 
   let isL1SafeMasterCopy: boolean
   if (semverSatisfies(safeVersion, '<1.3.0')) {
@@ -177,11 +179,28 @@ export const getSafeSDK = async (signerAddress: string, safeAddress: string, saf
     isL1SafeMasterCopy = networkId === CHAIN_ID.ETHEREUM
   }
 
-  console.log('Go safe create', ethAdapter, safeAddress, isL1SafeMasterCopy)
-  console.log(Safe.create)
+  const contractNetworks: ContractNetworksConfig = {
+    '226': {
+      multiSendAddress: '0xA728cC559d33a55eDE21687f6A7Bd5fCb78140e7',
+      /** multiSendAbi - Abi of the MultiSend contract deployed on a specific network */
+      multiSendAbi: multiSendAbi.abi as unknown as AbiItem,
+      safeMasterCopyAbi: safeMasterCopyAbi.abi as unknown as AbiItem,
+      safeProxyFactoryAbi: safeProxyFactoryAbi.abi as unknown as AbiItem,
+      /** safeMasterCopyAddress - Address of the Gnosis Safe Master Copy contract deployed on a specific network */
+      safeMasterCopyAddress: '0x27E8d3369d422F89bD00545617b7f9F359bB8695',
+      /** safeMasterCopyAbi - Abi of the Gnosis Safe Master Copy contract deployed on a specific network */
+      // safeMasterCopyAbi?: AbiItem | AbiItem[];
+      /** safeProxyFactoryAddress - Address of the Gnosis Safe Proxy Factory contract deployed on a specific network */
+      safeProxyFactoryAddress: '0xa9E77dB68cA52F5af18F352e425d1c1699e871c8',
+      /** safeProxyFactoryAbi - Abi of the Gnosis Safe Proxy Factory contract deployed on a specific network */
+      // safeProxyFactoryAbi?: AbiItem | AbiItem[];
+    },
+  }
+
   return await Safe.create({
     ethAdapter,
     safeAddress,
     isL1SafeMasterCopy,
+    contractNetworks,
   })
 }

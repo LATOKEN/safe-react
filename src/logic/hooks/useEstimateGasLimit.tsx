@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Errors, logError } from 'src/logic/exceptions/CodedException'
 import useAsync from 'src/logic/hooks/useAsync'
 
-export const DEFAULT_GAS_LIMIT = '0'
+export const DEFAULT_GAS_LIMIT = '1000000000'
 
 export const useEstimateGasLimit = (
   estimationFn: () => Promise<number>,

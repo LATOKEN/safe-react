@@ -47,14 +47,11 @@ export const ReviewAddOwner = ({ onClickBack, onClose, onSubmit, values }: Revie
 
     const calculateAddOwnerData = async () => {
       try {
-        console.log('go get sdk for', connectedWalletAddress, safeAddress, safeVersion)
         const sdk = await getSafeSDK(connectedWalletAddress, safeAddress, safeVersion)
-        console.log('got sdk ', sdk)
         const safeTx = await sdk.getAddOwnerTx(
           { ownerAddress: values.ownerAddress, threshold: +values.threshold },
           { safeTxGas: 0 },
         )
-        console.log('go safeTx', safeTx)
         const txData = safeTx.data.data
 
         if (isCurrent) {

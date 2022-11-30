@@ -27,7 +27,7 @@ export const getPreValidatedSignatures = (from: string, initialString: string = 
   return `${initialString}000000000000000000000000${from.replace(
     EMPTY_DATA,
     '',
-  )}000000000000000000000000000000000000000000000000000000000000000001`
+  )}00000000000000000000000000000000000000000000000000000000000000000001`
 }
 
 export const generateSignaturesFromTxConfirmations = (
@@ -52,6 +52,7 @@ export const generateSignaturesFromTxConfirmations = (
 
   let sigs = '0x'
   confirmationsMap.forEach(({ signature, owner }) => {
+    console.log(signature, 'signature')
     if (signature) {
       sigs += signature.slice(2)
     } else {
@@ -59,6 +60,8 @@ export const generateSignaturesFromTxConfirmations = (
       sigs += getPreValidatedSignatures(owner, '')
     }
   })
+
+  console.log(sigs, 'sigs')
 
   return sigs
 }

@@ -148,7 +148,7 @@ export class TxSender {
       notifications.showOnRejection(err)
       return
     }
-
+    console.log(txArgs.sigs, 'txArgs.sigs')
     const executeData = isFinalization
       ? safeInstance.methods
           .execTransaction(
@@ -175,8 +175,10 @@ export class TxSender {
       from,
       data: executeData,
     })
-
+    console.log(txArgs, 'txArgs.sigs')
+    console.log(contractErrorMessage, 'contractErrorMessage')
     if (contractErrorMessage) {
+      // console.log(err, 'error line 248')
       logError(Errors._803, contractErrorMessage)
       notifications.showOnError(err, contractErrorMessage)
     }
@@ -245,6 +247,7 @@ export class TxSender {
     try {
       await this.sendTx(confirmCallback)
     } catch (err) {
+      console.log(err, 'error line 248')
       logError(Errors._803, err.message)
       this.onError(err, errorCallback)
     }
@@ -292,7 +295,7 @@ export const createTransaction = (
 
     // Selectors
     const state = getState()
-
+    props.safeTxGas = '0'
     // Assign fallback values to certain props
     const txProps = {
       ...props,
@@ -300,8 +303,9 @@ export const createTransaction = (
       operation: props.operation ?? Operation.CALL,
       navigateToTransactionsTab: props.navigateToTransactionsTab ?? true,
       origin: props.origin,
+      //  safeTxGas: '0',
     }
-
+    console.log('[txProps]', txProps)
     // Populate instance vars
     try {
       await sender.prepare(dispatch, state, txProps)

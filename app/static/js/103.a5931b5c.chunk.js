@@ -1,0 +1,2 @@
+(this["webpackJsonpsafe-react"]=this["webpackJsonpsafe-react"]||[]).push([[103],{3113:function(e,t,n){"use strict";n.r(t);var a=n(1);t.default=function(){return Object(a.useEffect)((function(){var e=document.createElement("style");return e.innerHTML=".bn-onboard-modal-select-wallets li:first-of-type {display: none;}",document.head.appendChild(e),function(){e.remove()}}),[]),null}}}]);
+//# sourceMappingURL=103.a5931b5c.chunk.js.map
