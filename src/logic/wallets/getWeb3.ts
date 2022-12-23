@@ -9,9 +9,9 @@ import Safe, { ContractNetworksConfig } from '@gnosis.pm/safe-core-sdk'
 import Web3Adapter from '@gnosis.pm/safe-web3-lib'
 import { FEATURES } from '@gnosis.pm/safe-react-gateway-sdk'
 import memoize from 'lodash/memoize'
-import multiSendAbi from './abis/multi_send.json'
 import safeMasterCopyAbi from './abis/gnosis_safe.json'
 import safeProxyFactoryAbi from './abis/proxy_factory.json'
+import multiSendAbi from './abis/multi_send.json'
 import { ZERO_ADDRESS } from './ethAddresses'
 import { EMPTY_DATA } from './ethTransactions'
 import { getRpcServiceUrl, _getChainId } from 'src/config'
@@ -181,19 +181,24 @@ export const getSafeSDK = async (signerAddress: string, safeAddress: string, saf
 
   const contractNetworks: ContractNetworksConfig = {
     '226': {
-      multiSendAddress: '0xA728cC559d33a55eDE21687f6A7Bd5fCb78140e7',
-      /** multiSendAbi - Abi of the MultiSend contract deployed on a specific network */
-      multiSendAbi: multiSendAbi.abi as unknown as AbiItem,
-      safeMasterCopyAbi: safeMasterCopyAbi.abi as unknown as AbiItem,
-      safeProxyFactoryAbi: safeProxyFactoryAbi.abi as unknown as AbiItem,
-      /** safeMasterCopyAddress - Address of the Gnosis Safe Master Copy contract deployed on a specific network */
       safeMasterCopyAddress: '0x27E8d3369d422F89bD00545617b7f9F359bB8695',
-      /** safeMasterCopyAbi - Abi of the Gnosis Safe Master Copy contract deployed on a specific network */
-      // safeMasterCopyAbi?: AbiItem | AbiItem[];
-      /** safeProxyFactoryAddress - Address of the Gnosis Safe Proxy Factory contract deployed on a specific network */
+      safeMasterCopyAbi: safeMasterCopyAbi.abi as unknown as AbiItem,
+
       safeProxyFactoryAddress: '0xa9E77dB68cA52F5af18F352e425d1c1699e871c8',
-      /** safeProxyFactoryAbi - Abi of the Gnosis Safe Proxy Factory contract deployed on a specific network */
-      // safeProxyFactoryAbi?: AbiItem | AbiItem[];
+      safeProxyFactoryAbi: safeProxyFactoryAbi.abi as unknown as AbiItem,
+
+      multiSendAddress: '0xA728cC559d33a55eDE21687f6A7Bd5fCb78140e7',
+      multiSendAbi: multiSendAbi.abi as unknown as AbiItem,
+    },
+    '225': {
+      safeMasterCopyAddress: '0xf044A28b460724a84a79C1F837695e848CE69036',
+      safeMasterCopyAbi: safeMasterCopyAbi.abi as unknown as AbiItem,
+
+      safeProxyFactoryAddress: '0x6E33A94648A8C754062c3626C8600D5F223F1964',
+      safeProxyFactoryAbi: safeProxyFactoryAbi.abi as unknown as AbiItem,
+
+      multiSendAddress: '0xEdd8638ab849a4718985fBd6044f333810a4F1d3',
+      multiSendAbi: multiSendAbi.abi as unknown as AbiItem,
     },
   }
 
